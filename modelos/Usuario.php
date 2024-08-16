@@ -4,7 +4,7 @@ require "../Config/Conexion.php";
 class Usuario
 {
 
-    public function _construct() {}
+    public function __construct() {}
 
     public function insertar($nombre, $apellido, $login, $email, $clavehash, $imagen)
     {

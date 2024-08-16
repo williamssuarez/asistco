@@ -85,6 +85,20 @@
                 </ul>
             </li>
             <li>
+                <div class="icon-link">
+                    <a href="#">
+                        <i class="bx bx-calendar"></i>
+                        <span class="link_name">Guardia</span>
+                    </a>
+                    <i class="bx bxs-chevron-down arrow"></i>
+                </div>
+                <ul class="sub-menu">
+                    <li><a class="link_name" href="#">Guardia:</a></li>
+                    <li><a href="Guardia.php">Programación de Guardia</a></li>
+                    <li><a href="#">Programación de Compensatorios</a></li>
+                </ul>
+            </li>
+            <li>
                 <div class="profile-details">
                     <div class="profile-content">
                         <img src="../public/images/supervisor.png" alt="Supervisor">
