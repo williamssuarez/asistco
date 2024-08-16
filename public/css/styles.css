@@ -1,0 +1,320 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+body {
+  padding: 0;
+  margin: 0;
+}
+/* .encabezado {
+    background-image: url('../images/encabezado.jpg');
+    background-position: center;
+    width: 100%;
+    height: 50%;
+  } */
+
+.sideBar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 260px;
+  background: #211f3f;
+  z-index: 1000;
+  transition: all 0.5s ease;
+}
+
+.sideBar .toggle {
+  z-index: 10000;
+  position: absolute;
+  top: 50%;
+  right: -10px;
+  transform: translateY(-50%) rotate(180deg); /* Inicialmente sin rotación */
+  height: 25px;
+  width: 25px;
+  background: #211f3f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 25px;
+  color: white;
+  transition: transform 0.3s ease; /* Transición suave para la rotación */
+}
+
+.sideBar.toggle-active .toggle {
+  transform: translateY(-50%) rotate(0deg); /* Rota la flecha cuando se activa */
+}
+
+.sideBar.Close {
+  width: 78px;
+}
+
+.sideBar .logo-details {
+  height: 75px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background: #211f3f;
+}
+
+.sideBar .logo-details i {
+  font-size: 30px;
+  color: #fff;
+  height: 50px;
+  min-width: 78px;
+  text-align: center;
+  line-height: 50px;
+  cursor: pointer;
+}
+
+.sideBar.Close .logo-details .logo_name {
+  opacity: 0;
+  pointer-events: none;
+  transition-delay: 0s;
+}
+
+.sideBar .logo-details .logo_name {
+  font-size: 22px;
+  color: #fff;
+  font-weight: bold; /* Asegúrate de que sea 'bold' para destacar */
+  transition: 0.3s ease;
+  transition-delay: 0.1s;
+}
+
+.sideBar .nav-links::-webkit-scrollbar {
+  display: none;
+}
+
+.sideBar .nav-links {
+  height: calc(
+    100% - 60px
+  ); /* Ajusté la altura para que no sobrepase el 100% */
+  padding: 30px 0 150px 0;
+  overflow: auto;
+}
+
+.sideBar.Close .nav-links {
+  overflow: visible;
+}
+
+.sideBar .nav-links li .icon-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Para distribuir correctamente los iconos y el texto */
+}
+
+.sideBar.Close .nav-links li .icon-link {
+  display: block;
+}
+
+.sideBar .nav-links li {
+  position: relative;
+  list-style: none;
+  transition: all 0.4s ease;
+}
+
+.sideBar .nav-links li:hover {
+  background: #1d1b31;
+}
+
+.sideBar .nav-links li i {
+  height: 50px;
+  min-width: 78px;
+  text-align: center;
+  line-height: 50px;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.sideBar .nav-links li.showMenu i.arrow {
+  transform: rotate(-180deg);
+}
+
+.sideBar.Close .nav-links i.arrow {
+  display: none;
+}
+
+.sideBar .nav-links li a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.sideBar .nav-links li a .link_name {
+  font-size: 18px;
+  font-weight: 400;
+  color: #fff;
+}
+
+.sideBar.Close .nav-links li a .link_name {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sideBar .nav-links li .sub-menu {
+  padding: 6px 6px 14px 80px;
+  margin-top: -10px;
+  background: #1d1b31;
+  display: none;
+}
+
+.sideBar .nav-links li .sub-menu a {
+  color: #fff;
+  font-size: 15px;
+  padding: 5px 0;
+  white-space: nowrap;
+  opacity: 0.6;
+  transition: all 0.3s ease;
+}
+
+.sideBar .nav-links li.showMenu .sub-menu {
+  display: block;
+}
+
+.sideBar .nav-links li .sub-menu a:hover {
+  opacity: 1;
+}
+
+.sideBar.Close .nav-links li .sub-menu {
+  position: absolute;
+  left: 100%;
+  top: -10px;
+  margin-top: 0;
+  padding: 10px 20px;
+  border-radius: 0 6px 6px 0;
+
+  opacity: 0;
+  display: block;
+  pointer-events: none;
+  transition: 0s;
+}
+
+.sideBar.Close .nav-links li:hover .sub-menu {
+  top: 0px;
+  opacity: 1;
+  pointer-events: auto;
+  transition: all 0.4s ease;
+}
+
+.sideBar .nav-links li .sub-menu .link_name {
+  display: none;
+}
+.sideBar.Close .nav-links li .sub-menu .link_name {
+  display: none;
+}
+
+.sideBar.Close .nav-links li .sub-menu .link_name {
+  font-size: 18px;
+  opacity: 1;
+  display: block;
+}
+
+.sideBar .nav-links li .sub-menu.blank {
+  opacity: 1;
+  pointer-events: auto;
+  padding: 3px 20px 6px 16px;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0s;
+}
+
+.sideBar .nav-links li:hover .sub-menu.blank {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.sideBar .profile-details {
+  position: fixed;
+  bottom: 0;
+  width: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #1d1b31;
+  padding: 6px 0;
+  transition: all 0.4s ease;
+}
+
+.sideBar.Close .profile-details {
+  background: none;
+}
+
+.sideBar.Close .profile-details {
+  width: 78px;
+}
+
+.sideBar.Close .profile-details .profile-content {
+  display: flex;
+  align-items: center;
+}
+
+.sideBar .profile-details img {
+  height: 30px;
+  width: 30px;
+  object-fit: cover;
+  border-radius: 50%; /* Cambié de 16px a 50% para redondear completamente */
+  margin: 0 14px 0 12px;
+  background: #1d1b31;
+  padding: 10px;
+  transition: all 0.5s ease;
+}
+
+.sideBar.Close .profile-details img {
+  padding: 10px;
+}
+.sideBar .profile-details .profile-name,
+.sideBar .profile-details .job {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.sideBar.Close .profile-details i,
+.sideBar.Close .profile-details .profile-name,
+.sideBar.Close .profile-details .job {
+  display: none;
+}
+
+.sideBar .profile-details .job {
+  font-size: 12px;
+}
+
+.home-section {
+  position: relative;
+  left: 260px;
+  transition: all 0.5s ease;
+  overflow-x: hidden;
+}
+
+.sideBar.Close ~ .home-section {
+  left: 78px;
+  width: calc(100% - 78px);
+}
+
+section.encabezado {
+  width: 100%;
+  height: 75px;
+}
+
+.home-section .home-content .bx-menu,
+.home-section .home-content .text {
+  color: #11101d;
+  font-size: 35px;
+  transition: color 0.3s ease; /* Transición de color para un mejor efecto visual */
+  cursor: pointer; /* Cambio a puntero para indicar que es interactivo */
+}
+
+.home-section .home-content .bx-menu:hover,
+.home-section .home-content .text:hover {
+  color: #211f3f; /* Cambié el color al hacer hover para resaltar la interactividad */
+}
+
+.home-section .home-content .text {
+  font-size: 26px;
+  font-weight: 600;
+  margin-left: 20px; /* Espacio entre el icono y el texto */
+}
