@@ -115,4 +115,11 @@ switch ($_GET["op"]) {
         session_destroy();
         header("Location: ../index.php");
         break;
+    case 'select_usuario':
+        $rspta = $usuario->listar();
+
+        while ($reg = $rspta->fetch_object()) {
+            echo '<option value="' . $reg->id . '">' . $reg->nombre . ' ' . $reg->apellido . '</option>';
+        }
+        break;
 }

@@ -1,10 +1,10 @@
 <?php
-// ob_start();
-// session_start();
-// if (!isset($_SESSION['nombre'])) {
-//     header("Location: login.html");
-//     exit;
-// } else {
+/*ob_start();
+session_start();
+if (!isset($_SESSION['nombre'])) {
+ header("Location: login.html");
+ exit;
+} else {*/
 require 'header.php';
 ?>
 <!--CONTENIDO -->
@@ -90,6 +90,6 @@ require 'footer.php';
 ?>
 <script src="./scripts/Asistencia.js"></script>
 <?php
-// }
-// ob_end_flush();
+/*}
+ob_end_flush();*/
 ?>

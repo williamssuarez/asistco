@@ -2,7 +2,7 @@
 
 require_once "../modelos/Empleado.php";
 
-$empleado = new Empleado();
+$usuario = new Empleado();
 
 $empleado_id = isset($_POST["empleado_id"]) ? limpiarCadena($_POST["empleado_id"]) : "";
 $nombre = isset($_POST["nombre"]) ? limpiarCadena($_POST["nombre"]) : "";
@@ -14,21 +14,21 @@ $codigo = isset($_POST["codigo"]) ? limpiarCadena($_POST["codigo"]) : "";
 switch ($_GET["op"]) {
     case 'guardaryeditar':
         if (empty($empleado_id)) {
-            $rspta = $empleado->insertar($nombre, $apellido, $documento_numero, $telefono, $codigo);
+            $rspta = $usuario->insertar($nombre, $apellido, $documento_numero, $telefono, $codigo);
             echo $rspta ? "Datos registrados correctamente" : "No se pudo registrar los datos";
         } else {
-            $rspta = $empleado->editar($empleado_id, $nombre, $apellido, $documento_numero, $telefono, $codigo);
+            $rspta = $usuario->editar($empleado_id, $nombre, $apellido, $documento_numero, $telefono, $codigo);
             echo $rspta ? "Datos actualizados correctamente" : "No se pudo actualizar los datos";
         }
         break;
 
     case 'mostrar':
-        $rspta = $empleado->mostrar($empleado_id);
+        $rspta = $usuario->mostrar($empleado_id);
         echo json_encode($rspta);
         break;
 
     case 'listar':
-        $rspta = $empleado->listar();
+        $rspta = $usuario->listar();
         $data = array();
 
         while ($reg = $rspta->fetch_object()) {
@@ -52,7 +52,7 @@ switch ($_GET["op"]) {
         break;
 
     case 'select_empleado':
-        $rspta = $empleado->listar();
+        $rspta = $usuario->listar();
 
         while ($reg = $rspta->fetch_object()) {
             echo '<option value="' . $reg->id . '">' . $reg->nombre . ' ' . $reg->apellido . '</option>';

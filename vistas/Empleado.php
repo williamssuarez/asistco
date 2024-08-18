@@ -1,11 +1,11 @@
 <?php
 // Descomentar estas líneas si necesitas controlar el acceso de sesión
-// ob_start();
-// session_start();
-// if (!isset($_SESSION['nombre'])) {
-//     header("Location: login.html");
-//     exit;
-// } else {
+/*ob_start();
+session_start();
+if (!isset($_SESSION['nombre'])) {
+ header("Location: login.html");
+ exit;
+} else {*/
 require 'header.php';
 ?>
 
@@ -128,6 +128,6 @@ require 'footer.php';
 ?>
 <script src="./scripts/Empleado.js"></script>
 <?php
-// }
-// ob_end_flush();
+/*}
+ ob_end_flush();*/
 ?>

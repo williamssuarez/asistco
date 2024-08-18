@@ -29,19 +29,12 @@
   <!-- Bootstrap Select -->
   <link rel="stylesheet" href="../public/css/bootstrap-select.min.css">
 
+    <link rel="stylesheet" href="../public/plugins/node_modules/sweetalert2/dist/sweetalert2.css" >
+
     <!-- FullCalendar 3.10.5 JS -->
-    <link rel="stylesheet" href="../public/plugins/node_modules/fullcalendar/dist/fullcalendar.css">
-
-<!-- Moment 2.30.1 JS -->
-<script src="../public/plugins/node_modules/moment/dist/moment.js"></script>
-<script src="../public/plugins/node_modules/moment/dist/locale/es.js"></script>
-
-<!-- FullCalendar 3.10.5 JS -->
-<script src="../public/plugins/node_modules/fullcalendar/dist/fullcalendar.js"></script>
-<script src="../public/plugins/node_modules/fullcalendar/dist/locale/es.js"></script>
-
-<!-- SweetAlert2 11.11.0 JS -->
-<!--<link rel="stylesheet" href="../public/plugins/node_modules/sweetalert2/dist/sweetalert2.min.css">-->
+<link rel="stylesheet" href="../public/plugins/fullcalendar-5.11.5/lib/main.css">
+<script src="../public/plugins/fullcalendar-5.11.5/lib/main.js"></script>
+<script src="../public/plugins/fullcalendar-5.11.5/lib/locales-all.js"></script>
 </head>
 
 <body>
@@ -78,15 +71,15 @@
     <li>
         <div class="icon-link">
             <a href="#">
-                <i class="bx bx-calendar"></i>
+                <i class="bx bx-calendar-plus"></i>
                 <span class="link_name">Guardia</span>
             </a>
             <i class="bx bxs-chevron-down arrow"></i>
         </div>
         <ul class="sub-menu">
             <li><a class="link_name" href="#">Guardia:</a></li>
-            <li><a href="Guardia.php">Programación de Guardias</a></li>
-            <li><a href="#">Programación de Compensatorios</a></li>
+            <li><a href="Guardia.php">Guardias</a></li>
+            <li><a href="#">Compensatorios</a></li>
         </ul>
     </li>
       <li>

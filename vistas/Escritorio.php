@@ -1,7 +1,7 @@
 <?php
-// ob_start();
-// session_start();
-/*if (!isset($_SESSION['nombre'])) {
+/*ob_start();
+session_start();
+if (!isset($_SESSION['nombre'])) {
     header("Location: login.html");
     exit;
 } else {*/
@@ -75,9 +75,7 @@ $reg->nombre;
         </div> <!-- Fin de row -->
     </div> <!-- Fin de content -->
 </div> <!-- Fin de content-wrapper -->
-//<?php
-
-    //}
-    //ob_end_flush();
-    //
+<?php
+/*}
+ob_end_flush();*/
     ?>

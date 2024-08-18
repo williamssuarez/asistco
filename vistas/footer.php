@@ -1,4 +1,4 @@
-<footer class="home-section">
+    <footer class="home-section">
   <div class="pull-right hidden-xs">
 
   </div>
@@ -26,16 +26,8 @@
 <!-- Select -->
 <script src="../public/js/bootstrap-select.min.js"></script>
 
-<!-- Moment 2.30.1 JS -->
-<script src="../public/plugins/node_modules/moment/dist/moment.js"></script>
-<script src="../public/plugins/node_modules/moment/dist/locale/es.js"></script>
-
-<!-- FullCalendar 3.10.5 JS -->
-<script src="../public/plugins/node_modules/fullcalendar/dist/fullcalendar.js"></script>
-<script src="../public/plugins/node_modules/fullcalendar/dist/locale-all.js"></script>
-
 <!-- SweetAlert2 11.11.0 JS -->
-<script src="../public/plugins/node_modules/sweetalert2/dist/sweetalert2.min.js"></script>
+<script src="../public/plugins/node_modules/sweetalert2/dist/sweetalert2.js"></script>
 
 </body>
 

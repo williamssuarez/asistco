@@ -1,0 +1,24 @@
+<!-- Formulario para datos -->
+<form action="" name="formulario" id="formulario" method="POST">
+
+  <div class="form-group">
+    <label>Desde</label>
+    <input type="datetime-local" class="form-control" name="fecha_inicio">
+  </div>
+
+  <div class="form-group">
+    <label>Hasta</label>
+    <input type="datetime-local" class="form-control" name="fecha_fin">
+  </div>
+
+  <div class="form-group">
+    <label>Usuario</label>
+    <select name="user_id" id="user_id" class="form-control selectpicker" data-live-search="true" required>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="observaciones">Observaciones:</label>
+    <input type="text" class="form-control" name="observaciones" id="observaciones" maxlength="100" placeholder="Observaciones" required>
+  </div>
+</form>

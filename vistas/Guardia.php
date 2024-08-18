@@ -1,11 +1,11 @@
 <?php
-// ob_start();
-// session_start();
-// if (!isset($_SESSION['nombre'])) {
-//     header("Location: login.html");
-//     exit;
-// } else {
-require 'header.php';
+/*ob_start();
+session_start();
+if (!isset($_SESSION['nombre'])) {
+    header("Location: login.html");
+exit;
+} else {*/
+    require 'header.php';
 ?>
     <!--CONTENIDO -->
     <div class="home-section">
@@ -60,12 +60,6 @@ require 'header.php';
                             </table>
                         </div>
                         <!-- Fin tabla para listar datos -->
-
-                        <!-- Formulario para datos -->
-                        <!-- Fin formulario para datos -->
-
-                        <!--fin formulatio para datos-->
-
                         <!--fin centro-->
 
                     </div>
@@ -84,10 +78,7 @@ require 'header.php';
 
                         <!--box-header-->
                         <div class="box-header with-border">
-                            <h1 class="box-title">Lista de Guardias
-                                <div class="box-tools pull-right">
-
-                                </div>
+                            <h1 class="box-title">Lista de Guardias</h1>
                         </div>
                         <!--box-header-->
 
@@ -95,8 +86,10 @@ require 'header.php';
 
                         <!--tabla para listar datos-->
                         <!-- Tabla para listar datos -->
-                        <div class="panel-body" id="calendar">
+                        <div class="panel-body">
+                            <div id="calendar">
 
+                            </div>
                         </div>
                         <!-- Fin tabla para listar datos -->
 
@@ -126,7 +119,8 @@ require 'header.php';
 require 'footer.php';
 ?>
     <script src="./scripts/Guardia.js"></script>
+    <!--<script src="./scripts/calendar4Guardia2.js"></script>-->
 <?php
-// }
-// ob_end_flush();
+/*}
+ob_end_flush();*/
 ?>

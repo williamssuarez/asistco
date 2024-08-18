@@ -54,7 +54,7 @@ class Usuario
 
     public function verificar($login, $clavehash)
     {
-        $sql = "SELECT * FROM usuarios WHERE login='$login' AND clave='$clavehash' AND estado='1'";
+        $sql = "SELECT * FROM usuarios WHERE login='$login' AND password='$clavehash' AND estado='1'";
         return ejecutarConsulta($sql);
     }
 }
