@@ -1,12 +1,14 @@
 <?php
 
 session_start();
+require_once "../modelos/CompensatoriosUsuarios.php";
 require_once "../modelos/Usuario.php";
 
 // Asegúrate de definir o incluir la función limpiarCadena
 
 
 $usuario = new Usuario();
+$compensatorioUsuario = new CompensatoriosUsuarios();
 
 $id = isset($_POST["idusuario"]) ? limpiarCadena($_POST["idusuario"]) : "";
 $nombre = isset($_POST["nombre"]) ? limpiarCadena($_POST["nombre"]) : "";
@@ -36,6 +38,16 @@ switch ($_GET["op"]) {
 
         if (empty($id)) {
             $rspta = $usuario->insertar($nombre, $apellido, $login, $email, $clavehash, $imagen);
+
+            //AGREGAR AL USUARIO A LOS COMPENSATORIOS UNA VEZ REGISTRADO
+
+            //Obtener id de usuario por email
+            $user_id = $usuario->obtener_userid_byemail($email);
+            $string = $user_id->fetch_object();
+
+            //insertar en los compensatorios
+            $compensatorioUsuario->insertar($string->id);
+            
             echo $rspta ? "Datos registrados correctamente" : "No se pudo registrar todos los datos del usuario";
         } else {
             $rspta = $usuario->editar($id, $nombre, $apellido, $login, $email, $clavehash, $imagen);

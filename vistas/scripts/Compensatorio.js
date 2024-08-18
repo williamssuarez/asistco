@@ -1,4 +1,5 @@
 var tabla;
+var tabla2;
 var calendar;
 
 $(document).ready(function() {
@@ -10,11 +11,11 @@ $(document).ready(function() {
         calendar = new FullCalendar.Calendar(calendarEl, {
             customButtons: {
                 addEventBtn: {
-                    text: 'Programar Guardia',
+                    text: 'Programar Compensatorio',
                     icon: 'bx bx-calendar-plus',
                     click: function () {
                         $.ajax({
-                            url: '../controlador/Guardia.php?op=getguardiaform',
+                            url: '../controlador/Compensatorio.php?op=getcompensatorioform',
                             type: 'GET',
                             beforeSend: function() {
                                 Swal.fire({
@@ -30,7 +31,7 @@ $(document).ready(function() {
                             success: function (response) {
                                 Swal.fire({
                                     heightAuto: false, //Evita que la pagina suba cuando se cierra la alerta
-                                    title: 'Programa una Guardia',
+                                    title: 'Programa un compensatorio',
                                     html: response,
                                     showCancelButton: true,
                                     confirmButtonText: 'Enviar',
@@ -49,7 +50,7 @@ $(document).ready(function() {
                                         let formData = new FormData($('#formulario')[0]);
 
                                         $.ajax({
-                                            url: '../controlador/Guardia.php?op=guardaryeditar',
+                                            url: '../controlador/Compensatorio.php?op=guardaryeditar',
                                             type: 'POST',
                                             data: formData,
                                             contentType: false,
@@ -68,12 +69,13 @@ $(document).ready(function() {
                                             success: function (respuesta) {
                                                 //Manejar exito
                                                 calendar.refetchEvents(); //Refrescar calendario
-                                                listar() //Refrescar datatable
+                                                listar(); //Refrescar datatable1
+                                                listar2(); //Refrescar datatable1
 
                                                 Swal.fire({
                                                     heightAuto: false, //Evita que la pagina suba cuando se cierra la alerta
                                                     title: 'Programado Correctamente',
-                                                    text: 'Tu guardia ha sido programada correctamente',
+                                                    text: 'Tu compensatorio ha sido programada correctamente',
                                                     icon: 'success',
                                                     showConfirmButton: true,
                                                     confirmButtonText: 'Aceptar',
@@ -122,7 +124,7 @@ $(document).ready(function() {
                 center: 'title',
                 right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
             },
-            dayMaxEventRows: true, // limitar el maximo de guardias que se muestran en una sola columna antes de comprimir la vista
+            dayMaxEventRows: true, // limitar el maximo de compensatorios que se muestran en una sola columna antes de comprimir la vista
             views: {
                 dayGridMonth: {
                     dayMaxEventRows: 4
@@ -141,7 +143,7 @@ $(document).ready(function() {
                 next:"Siguiente $0",
                 listWeek: "Vista de la agenda"
             },
-            events: '../controlador/Guardia.php?op=guardiasCalendario', //API o Endpoint de donde obtiene las guardias
+            events: '../controlador/Compensatorio.php?op=compensatoriosCalendario', //API o Endpoint de donde obtiene las guardias
         });
 
         calendar.render(); //Renderizar calendario
@@ -150,9 +152,11 @@ $(document).ready(function() {
 
 function init() {
     listar();
+    listar2();
 
     function init() {
         listar();
+        listar2();
     }
 }
 
@@ -164,7 +168,7 @@ function listar() {
         dom: 'Bfrtip',
         buttons: ['copyHtml5', 'excelHtml5', 'csvHtml5', 'pdf'],
         ajax: {
-            url: '../controlador/Guardia.php?op=listar',
+            url: '../controlador/Compensatorio.php?op=listar',
             type: 'GET', // Corregido: "get" a "GET" (aunque en algunos entornos, "get" también funciona)
             dataType: 'json',
             error: function (e) {
@@ -177,32 +181,55 @@ function listar() {
     });
 }
 
-function cancelar(idguardia) {
-    bootbox.confirm('¿Está seguro de eliminar esta guardia?', function (result) {
+function listar2() {
+    tabla2 = $('#tbllistado2').DataTable({
+        // Corregido: "datatable" a "DataTable" con "D" mayúscula
+        processing: true, // Corregido: "aProcessing" a "processing"
+        serverSide: true, // Corregido: "aServerSide" a "serverSide"
+        dom: 'Bfrtip',
+        buttons: ['copyHtml5', 'excelHtml5', 'csvHtml5', 'pdf'],
+        ajax: {
+            url: '../controlador/Compensatorio.php?op=listarCompensatorioUsuarios',
+            type: 'GET', // Corregido: "get" a "GET" (aunque en algunos entornos, "get" también funciona)
+            dataType: 'json',
+            error: function (e) {
+                console.log(e.responseText);
+            },
+        },
+        destroy: true, // Corregido: "bDestroy" a "destroy"
+        pageLength: 10, // Corregido: "iDisplayLength" a "pageLength"
+        order: [[0, 'desc']],
+    });
+}
+
+function cancelar(idcompensatorio) {
+    bootbox.confirm('¿Está seguro de cancelar este compensatorio?', function (result) {
         if (result) {
             $.post(
-                '../controlador/Guardia.php?op=cancelar',
-                { idguardia: idguardia },
+                '../controlador/Compensatorio.php?op=cancelar',
+                { idcompensatorio: idcompensatorio },
                 function (e) {
                     bootbox.alert(e);
                     calendar.refetchEvents(); //Refrescar el calendario
-                    listar();//tabla.ajax.reload(); //Refrescar la tabla
+                    listar();//Refrescar la tabla
+                    listar2();
                 }
             );
         }
     });
 }
 
-function terminar(idguardia) {
-    bootbox.confirm('¿Está seguro de terminar esta guardia?', function (result) {
+function terminar(idcompensatorio) {
+    bootbox.confirm('¿Está seguro de marcar como cumplido este compensatorio?', function (result) {
         if (result) {
             $.post(
-                '../controlador/Guardia.php?op=terminar',
-                { idguardia: idguardia },
+                '../controlador/Compensatorio.php?op=terminar',
+                { idcompensatorio: idcompensatorio },
                 function (e) {
                     bootbox.alert(e);
                     calendar.refetchEvents(); //Refrescar el calendario
                     listar();//tabla.ajax.reload(); //Refrescar la tabla
+                    listar2();
                 }
             );
         }

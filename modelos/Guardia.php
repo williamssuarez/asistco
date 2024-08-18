@@ -1,6 +1,6 @@
 <?php
 
-require "../Config/conexion.php";
+require_once "../Config/conexion.php";
 
 class Guardia
 {
@@ -13,7 +13,7 @@ class Guardia
                 FROM guardia a 
                 INNER JOIN usuarios e ON a.user_id = e.id 
                 WHERE a.estado = 1
-                ORDER BY a.id DESC";
+                ORDER BY a.fecha_inicio DESC";
         return ejecutarConsulta($sql);
     }
 
@@ -38,6 +38,12 @@ class Guardia
     public function terminar($idguardia)
     {
         $sql = "UPDATE guardia SET isDone=1 WHERE id='$idguardia'";
+        return ejecutarConsulta($sql);
+    }
+
+    public function obtener_useridby_guardiaid($id)
+    {
+        $sql = "SELECT user_id AS usuario FROM guardia WHERE id='$id'";
         return ejecutarConsulta($sql);
     }
 

@@ -79,7 +79,7 @@
         <ul class="sub-menu">
             <li><a class="link_name" href="#">Guardia:</a></li>
             <li><a href="Guardia.php">Guardias</a></li>
-            <li><a href="#">Compensatorios</a></li>
+            <li><a href="Compensatorio.php">Compensatorios</a></li>
         </ul>
     </li>
       <li>

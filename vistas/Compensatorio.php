@@ -16,6 +16,7 @@ exit;
             <!-- Default box -->
             <div class="row">
 
+                <!-- LISTA DE COMPENSATORIOS DE USUARIOS INICIA AQUI -->
                 <!-- /.col-md12 -->
                 <div class="col-md-12">
 
@@ -24,7 +25,59 @@ exit;
 
                         <!--box-header-->
                         <div class="box-header with-border">
-                            <h1 class="box-title">Lista de Guardias
+                            <h1 class="box-title">Lista de Compensatorios de Usuarios
+                                <div class="box-tools pull-right">
+
+                                </div>
+                        </div>
+                        <!--box-header-->
+
+                        <!--centro-->
+
+                        <!--tabla para listar datos-->
+                        <!-- Tabla para listar datos -->
+                        <div class="panel-body table-responsive" id="listadoregistros2">
+                            <table id="tbllistado2" class="table table-striped table-bordered table-condensed table-hover">
+                                <thead>
+                                <tr>
+                                    <th>Estado</th>
+                                    <th>Usuario</th>
+                                    <th>Días disponibles</th>
+                                    <th>Estado</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <th>Estado</th>
+                                    <th>Usuario</th>
+                                    <th>Días disponibles</th>
+                                    <th>Estado</th>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <!-- Fin tabla para listar datos -->
+                        <!--fin centro-->
+
+                    </div>
+                    <!--fin box-->
+
+                </div>
+                <!-- /.col-md12 -->
+                <!-- LISTA DE COMPENSATORIOS DE USUARIOS TERMINA AQUI -->
+
+                <!-- LISTA DE COMPENSATORIOS INICIA AQUI -->
+                <!-- /.col-md12 -->
+                <div class="col-md-12">
+
+                    <!--fin box-->
+                    <div class="box">
+
+                        <!--box-header-->
+                        <div class="box-header with-border">
+                            <h1 class="box-title">Lista de Compensatorios
                                 <div class="box-tools pull-right">
 
                                 </div>
@@ -41,8 +94,7 @@ exit;
                                 <tr>
                                     <th>#</th>
                                     <th>Usuario</th>
-                                    <th>Desde</th>
-                                    <th>Hasta</th>
+                                    <th>Día</th>
                                     <th>Observaciones</th>
                                     <th>Estado</th>
                                 </tr>
@@ -53,8 +105,7 @@ exit;
                                 <tr>
                                     <th>#</th>
                                     <th>Usuario</th>
-                                    <th>Desde</th>
-                                    <th>Hasta</th>
+                                    <th>Día</th>
                                     <th>Observaciones</th>
                                     <th>Estado</th>
                                 </tr>
@@ -69,9 +120,9 @@ exit;
 
                 </div>
                 <!-- /.col-md12 -->
+                <!-- LISTA DE COMPENSATORIOS TERMINA AQUI -->
 
                 <!-- CALENDARIO INICIA AQUI -->
-
                 <!-- /.col-md12 -->
                 <div class="col-md-12">
 
@@ -80,7 +131,7 @@ exit;
 
                         <!--box-header-->
                         <div class="box-header with-border">
-                            <h1 class="box-title">Programación de Guardias</h1>
+                            <h1 class="box-title">Programación de Compensatorios</h1>
                         </div>
                         <!--box-header-->
 
@@ -107,6 +158,7 @@ exit;
 
                 </div>
                 <!-- /.col-md12 -->
+                <!-- CALENDARIO TERMINA AQUI -->
 
             </div>
             <!-- fin Default-box -->
@@ -120,7 +172,7 @@ exit;
 <?php
 require 'footer.php';
 ?>
-    <script src="./scripts/Guardia.js"></script>
+    <script src="./scripts/Compensatorio.js"></script>
     <!--<script src="./scripts/calendar4Guardia2.js"></script>-->
 <?php
 /*}

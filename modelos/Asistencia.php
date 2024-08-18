@@ -1,6 +1,7 @@
 <?php
 
-require "../Config/conexion.php";
+//Cambio de require a require_once
+require_once "../Config/conexion.php";
 
 class Asistencia
 {

@@ -1,7 +1,9 @@
 <?php
 
 require_once "../modelos/Guardia.php";
+require_once "../modelos/CompensatoriosUsuarios.php";
 $guardia = new Guardia();
+$compensatorioUsuario = new CompensatoriosUsuarios();
 
 $id = isset($_POST["idguardia"]) ? limpiarCadena($_POST["idguardia"]) : "";
 
@@ -12,8 +14,7 @@ $fecha_fin = isset($_POST["fecha_fin"]) ? limpiarCadena($_POST["fecha_fin"]) : "
 
 switch ($_GET["op"]) {
     case 'guardaryeditar':
-        if (empty($guardia_id)) {
-            $formErrors = [];
+        $formErrors = [];
 
             //Validar que fechas no esten vacias
             if (!$fecha_inicio) {
@@ -27,7 +28,7 @@ switch ($_GET["op"]) {
             $fechaInicio = new DateTime($fecha_inicio);
             $fechaFin = new DateTime($fecha_fin);
             if ($fechaInicio && $fechaFin && $fechaInicio > $fechaFin) {
-                $formErrors[] = 'La fecha del final de la guardia no puede ser anterior a la fecha de inicio, verifique.';
+                $formErrors[] = 'La fecha del final de la guardia no puede ser anterior a la fecha de inicio, vuelva a intentarlo.';
             }
 
             //Si el usuario seleccionado ya tiene 4 guardias pendientes no permitir la insercion
@@ -40,12 +41,11 @@ switch ($_GET["op"]) {
 
 
             if (!empty($formErrors)){
-                //$errorsString = implode(",", $formErrors);
-                http_response_code(404); // This will trigger the error handler in jQuery
+                http_response_code(404); // Disparar error en ajax
 
                 $jsonResponse = [
                     'success' => false,
-                    'errors' => $formErrors // Sending the array of errors
+                    'errors' => $formErrors // mandar array con los errores
                 ];
 
                 echo json_encode($jsonResponse);
@@ -53,7 +53,6 @@ switch ($_GET["op"]) {
             } else {
 
                 $rspta = $guardia->insertar($user_id, $fecha_inicio, $fecha_fin, $observaciones);
-                /*echo $rspta ? "Datos registrados correctamente" : "No se pudo registrar los datos";*/
 
                 $jsonResponse = [
                     'success' => true,
@@ -62,10 +61,6 @@ switch ($_GET["op"]) {
 
                 echo json_encode($jsonResponse);
             }
-        } else {
-            $rspta = $guardia->editar($guardia_id, $user_id, $fecha_inicio, $fecha_fin, $observaciones);
-            echo $rspta ? "Datos actualizados correctamente" : "No se pudo actualizar los datos";
-        }
         break;
     case 'getguardiaform':
 
@@ -75,17 +70,34 @@ switch ($_GET["op"]) {
         echo $formHtml;
         break;
     case 'guardiasCalendario':
+        //Obtener guardias para el calendario
         $rspta = $guardia->listar();
         $data = array();
         $formattedEvents = [];
 
         while ($reg = $rspta->fetch_object()) {
+
+            $status = $reg->isDone;
+            $backgroundColor = '';
+            $textColor = '';
+
+            if ($status == 0) {
+                $backgroundColor = '#FFC107';//Pendiente = amarillo
+                $textColor = '#1F2D3D';
+            } elseif ($status == 1) {
+                $backgroundColor = '#008000'; //Terminada = exito
+                $textColor = '';
+            } else {
+                $backgroundColor = 'blue'; // Default color
+                $textColor = '';
+            }
             $formattedEvents[] = [
                 "id" => $reg->id,
                 "title" => $reg->usuarios,
                 "start" => $reg->fecha_inicio,
                 "end" => $reg->fecha_fin,
-                //"4" => $reg->observaciones,
+                "backgroundColor" => $backgroundColor,
+                "textColor" => $textColor
             ];
         }
 
@@ -101,10 +113,11 @@ switch ($_GET["op"]) {
             $fecha_fin = DateTime::createFromFormat('Y-m-d H:i:s', $reg->fecha_fin)->format('d/m/Y H:i');
 
             $data[] = array(
-                "0" => '<button title="Terminar Guardia" class="btn btn-success btn-xs" onclick="terminar(' . $reg->id . ')"><i class="fa fa-check"></i></button>'
+                "0" => ($reg->isDone == 0)
+                    ? '<button title="Terminar Guardia" class="btn btn-success btn-xs" onclick="terminar(' . $reg->id . ')"><i class="fa fa-check"></i></button>'
                     . ' '
-                    .'<button title="Cancelar Guardia" class="btn btn-danger btn-xs" onclick="cancelar(' . $reg->id . ')"><i class="fa fa-trash"></i></button>',
-                //"0" => $reg->id,
+                    . '<button title="Cancelar Guardia" class="btn btn-danger btn-xs" onclick="cancelar(' . $reg->id . ')"><i class="fa fa-trash"></i></button>'
+                    : '<span class="label bg-green"> Terminada </span>',
                 "1" => $reg->usuarios,
                 "2" => $fecha_inicio,
                 "3" => $fecha_fin,
@@ -127,6 +140,18 @@ switch ($_GET["op"]) {
     break;
     case 'terminar':
         $rspta = $guardia->terminar($id);
+
+        //Obtener id de usuario por id de guardia
+        $consulta1 = $guardia->obtener_useridby_guardiaid($id)->fetch_object();
+        $user_id = $consulta1->usuario;
+
+        //Obtener compensatorios totales del usuario y sumarle 2
+        $consulta2 = $compensatorioUsuario->obtener_compensatorios_usuario($user_id)->fetch_object();
+        $compensatorios_actuales = $consulta2->totales + 2;
+
+        //insertar en los compensatorios
+        $consulta3 = $compensatorioUsuario->editarcompensatorios($user_id, $compensatorios_actuales);
+
         echo $rspta ? "Guardia terminada correctamente" : "No se pudieron actualizar los datos";
     break;
 }

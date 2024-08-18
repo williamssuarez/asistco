@@ -1,6 +1,7 @@
 <?php
 
-require "../Config/Conexion.php";
+//Cambio de require a require_once
+require_once "../Config/Conexion.php";
 class Usuario
 {
 
@@ -38,6 +39,13 @@ class Usuario
     {
         $sql = "SELECT * FROM usuarios WHERE id='$idusuario'";
         return ejecutarConsultaSimpleFila($sql);
+    }
+
+    //Buscar usuario por email
+    public function obtener_userid_byemail($email)
+    {
+        $sql = "SELECT id FROM usuarios WHERE email='$email'";
+        return ejecutarConsulta($sql);
     }
 
     public function listar()
