@@ -12,7 +12,7 @@ class Guardia
         $sql = "SELECT a.*, CONCAT(e.nombre, ' ', e.apellido) AS usuarios 
                 FROM guardia a 
                 INNER JOIN usuarios e ON a.user_id = e.id 
-                WHERE a.estado = 1 OR a.estado = 2
+                WHERE a.estado = 1
                 ORDER BY a.id DESC";
         return ejecutarConsulta($sql);
     }
@@ -38,6 +38,12 @@ class Guardia
     public function terminar($idguardia)
     {
         $sql = "UPDATE guardia SET isDone=1 WHERE id='$idguardia'";
+        return ejecutarConsulta($sql);
+    }
+
+    public function verificarguardias($idusuario)
+    {
+        $sql = "SELECT COUNT(*) AS total FROM guardia WHERE user_id='$idusuario' AND estado = 1 AND isDone = 0";
         return ejecutarConsulta($sql);
     }
 }

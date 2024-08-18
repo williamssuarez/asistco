@@ -15,23 +15,41 @@ switch ($_GET["op"]) {
         if (empty($guardia_id)) {
             $formErrors = [];
 
+            //Validar que fechas no esten vacias
             if (!$fecha_inicio) {
                 $formErrors[] = 'Fecha de inicio invalida';
             }
             if (!$fecha_fin) {
                 $formErrors[] = 'Fecha de finalizacion invalida';
             }
+
+            //Validar que la fecha de finalizacion no sea anterior a la de inicio
             $fechaInicio = new DateTime($fecha_inicio);
             $fechaFin = new DateTime($fecha_fin);
             if ($fechaInicio && $fechaFin && $fechaInicio > $fechaFin) {
                 $formErrors[] = 'La fecha del final de la guardia no puede ser anterior a la fecha de inicio, verifique.';
             }
 
-            if (!empty($formErrors)){
-                $errorsString = implode(",", $formErrors);
-                http_response_code(404);
+            //Si el usuario seleccionado ya tiene 4 guardias pendientes no permitir la insercion
+            $rspta = $guardia->verificarguardias($user_id);
+            $result = $rspta->fetch_object();
 
-                echo json_encode($errorsString);
+            if($result->total == 4){
+                $formErrors[] = 'Este usuario ya tiene 4 guardias programadas, elimine las actuales o marquelas como terminadas para continuar agregando mas guardias.';
+            }
+
+
+            if (!empty($formErrors)){
+                //$errorsString = implode(",", $formErrors);
+                http_response_code(404); // This will trigger the error handler in jQuery
+
+                $jsonResponse = [
+                    'success' => false,
+                    'errors' => $formErrors // Sending the array of errors
+                ];
+
+                echo json_encode($jsonResponse);
+                exit;
             } else {
 
                 $rspta = $guardia->insertar($user_id, $fecha_inicio, $fecha_fin, $observaciones);
@@ -60,20 +78,6 @@ switch ($_GET["op"]) {
         $rspta = $guardia->listar();
         $data = array();
         $formattedEvents = [];
-
-        /*foreach ($rspta->fetch_object() as $respuesta){
-            $formattedEvents[] = [
-                //'id' => $respuesta['id'],
-                'title' => $respuesta['nombre'] . " " . $respuesta['apellido'],
-                'start' => $respuesta['fecha_inicio'],
-                'end' => $respuesta['fecha_fin'],
-                /*'extendedProps' => [
-                    'description' => $event->getObservaciones()
-                ],
-                'backgroundColor' => $backgroundColor,
-                'textColor' => $textColor,
-            ];
-        }*/
 
         while ($reg = $rspta->fetch_object()) {
             $formattedEvents[] = [

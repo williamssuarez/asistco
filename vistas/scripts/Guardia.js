@@ -83,11 +83,14 @@ $(document).ready(function() {
                                             },
                                             error: function (error2) {
                                                 // Handle error
-                                                console.log(JSON.stringify(error2));
+                                                let errorResponse = JSON.parse(error2.responseText);
+
+                                                console.log(errorResponse.errors.join("\n"));
+
                                                 Swal.fire({
                                                     heightAuto: false, //Evita que la pagina suba cuando se cierra la alerta
                                                     title: 'Error en el formulario',
-                                                    text: JSON.stringify(error2),
+                                                    text: errorResponse.errors.join(", "),
                                                     icon: 'error',
                                                     showConfirmButton: true,
                                                     confirmButtonText: 'Aceptar',
