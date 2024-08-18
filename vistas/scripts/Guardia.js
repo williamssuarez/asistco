@@ -1,4 +1,5 @@
 var tabla;
+var calendar;
 
 $(document).ready(function() {
 
@@ -6,7 +7,7 @@ $(document).ready(function() {
     var calendarEl = document.getElementById('calendar');
 
     if (calendarEl) {
-        var calendar = new FullCalendar.Calendar(calendarEl, {
+        calendar = new FullCalendar.Calendar(calendarEl, {
             customButtons: {
                 addEventBtn: {
                     text: 'Programar Guardia',
@@ -82,10 +83,11 @@ $(document).ready(function() {
                                             },
                                             error: function (error2) {
                                                 // Handle error
+                                                console.log(JSON.stringify(error2));
                                                 Swal.fire({
                                                     heightAuto: false, //Evita que la pagina suba cuando se cierra la alerta
-                                                    title: 'Error',
-                                                    text: error2.formErrors,
+                                                    title: 'Error en el formulario',
+                                                    text: JSON.stringify(error2),
                                                     icon: 'error',
                                                     showConfirmButton: true,
                                                     confirmButtonText: 'Aceptar',
@@ -171,6 +173,38 @@ function listar() {
         destroy: true, // Corregido: "bDestroy" a "destroy"
         pageLength: 10, // Corregido: "iDisplayLength" a "pageLength"
         order: [[0, 'desc']],
+    });
+}
+
+function cancelar(idguardia) {
+    bootbox.confirm('¿Está seguro de eliminar esta guardia?', function (result) {
+        if (result) {
+            $.post(
+                '../controlador/Guardia.php?op=cancelar',
+                { idguardia: idguardia },
+                function (e) {
+                    bootbox.alert(e);
+                    calendar.refetchEvents(); //Refrescar el calendario
+                    listar();//tabla.ajax.reload(); //Refrescar la tabla
+                }
+            );
+        }
+    });
+}
+
+function terminar(idguardia) {
+    bootbox.confirm('¿Está seguro de terminar esta guardia?', function (result) {
+        if (result) {
+            $.post(
+                '../controlador/Guardia.php?op=terminar',
+                { idguardia: idguardia },
+                function (e) {
+                    bootbox.alert(e);
+                    calendar.refetchEvents(); //Refrescar el calendario
+                    listar();//tabla.ajax.reload(); //Refrescar la tabla
+                }
+            );
+        }
     });
 }
 

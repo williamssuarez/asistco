@@ -3,7 +3,7 @@
 require_once "../modelos/Guardia.php";
 $guardia = new Guardia();
 
-$guardia_id = isset($_POST["guardia_id"]) ? limpiarCadena($_POST["guardia_id"]) : "";
+$id = isset($_POST["idguardia"]) ? limpiarCadena($_POST["idguardia"]) : "";
 
 $observaciones = isset($_POST["observaciones"]) ? limpiarCadena($_POST["observaciones"]) : "";
 $user_id = isset($_POST["user_id"]) ? limpiarCadena($_POST["user_id"]) : "";
@@ -14,26 +14,24 @@ switch ($_GET["op"]) {
     case 'guardaryeditar':
         if (empty($guardia_id)) {
             $formErrors = [];
-            /*$fechaInicio = \DateTime::createFromFormat('d/m/Y H:i', $fecha_inicio);
-            $fechaFin = \DateTime::createFromFormat('d/m/Y H:i', $fecha_fin);
 
-            if (!$fechaInicio) {
+            if (!$fecha_inicio) {
                 $formErrors[] = 'Fecha de inicio invalida';
             }
-            if (!$fechaFin) {
-                $formErrors[] = 'Fecha de finalización invalida';
+            if (!$fecha_fin) {
+                $formErrors[] = 'Fecha de finalizacion invalida';
             }
+            $fechaInicio = new DateTime($fecha_inicio);
+            $fechaFin = new DateTime($fecha_fin);
             if ($fechaInicio && $fechaFin && $fechaInicio > $fechaFin) {
                 $formErrors[] = 'La fecha del final de la guardia no puede ser anterior a la fecha de inicio, verifique.';
-            }*/
+            }
 
             if (!empty($formErrors)){
-                $jsonResponse = [
-                    'error' => 'Resource not found',
-                    'formErrors' => $formErrors
-                ];
+                $errorsString = implode(",", $formErrors);
+                http_response_code(404);
 
-                echo json_encode($jsonResponse);
+                echo json_encode($errorsString);
             } else {
 
                 $rspta = $guardia->insertar($user_id, $fecha_inicio, $fecha_fin, $observaciones);
@@ -94,13 +92,20 @@ switch ($_GET["op"]) {
         $data = array();
 
         while ($reg = $rspta->fetch_object()) {
+
+            $fecha_inicio = DateTime::createFromFormat('Y-m-d H:i:s', $reg->fecha_inicio)->format('d/m/Y H:i');
+            $fecha_fin = DateTime::createFromFormat('Y-m-d H:i:s', $reg->fecha_fin)->format('d/m/Y H:i');
+
             $data[] = array(
-                //"0" => '<button class="btn btn-warning btn-xs" onclick="mostrar(' . $reg->id . ')"><i class="fa fa-pencil"></i></button>',
-                "0" => $reg->id,
+                "0" => '<button title="Terminar Guardia" class="btn btn-success btn-xs" onclick="terminar(' . $reg->id . ')"><i class="fa fa-check"></i></button>'
+                    . ' '
+                    .'<button title="Cancelar Guardia" class="btn btn-danger btn-xs" onclick="cancelar(' . $reg->id . ')"><i class="fa fa-trash"></i></button>',
+                //"0" => $reg->id,
                 "1" => $reg->usuarios,
-                "2" => $reg->fecha_inicio,
-                "3" => $reg->fecha_fin,
+                "2" => $fecha_inicio,
+                "3" => $fecha_fin,
                 "4" => $reg->observaciones,
+                "5" => ($reg->isDone == 0) ? '<span class="label bg-orange"> Pendiente </span>' : '<span class="label bg-green"> Terminada </span>',
             );
         }
 
@@ -111,6 +116,14 @@ switch ($_GET["op"]) {
             "aaData" => $data
         );
         echo json_encode($results);
+    break;
+    case 'cancelar':
+        $rspta = $guardia->cancelar($id);
+        echo $rspta ? "Datos eliminados correctamente" : "No se pudieron eliminar los datos";
+    break;
+    case 'terminar':
+        $rspta = $guardia->terminar($id);
+        echo $rspta ? "Guardia terminada correctamente" : "No se pudieron actualizar los datos";
     break;
 }
 ?>

@@ -44,6 +44,7 @@ exit;
                                     <th>Desde</th>
                                     <th>Hasta</th>
                                     <th>Observaciones</th>
+                                    <th>Estado</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -55,6 +56,7 @@ exit;
                                     <th>Desde</th>
                                     <th>Hasta</th>
                                     <th>Observaciones</th>
+                                    <th>Estado</th>
                                 </tr>
                                 </tfoot>
                             </table>
