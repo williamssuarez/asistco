@@ -27,7 +27,7 @@
 <script src="../public/js/bootstrap-select.min.js"></script>
 
 <!-- SweetAlert2 11.11.0 JS -->
-<script src="../public/plugins/node_modules/sweetalert2/dist/sweetalert2.js"></script>
+<script src="../public/plugins/sweetalert2/js/sweetalert2.js"></script>
 
 </body>
 

@@ -29,12 +29,14 @@
   <!-- Bootstrap Select -->
   <link rel="stylesheet" href="../public/css/bootstrap-select.min.css">
 
-    <link rel="stylesheet" href="../public/plugins/node_modules/sweetalert2/dist/sweetalert2.css" >
+  <!-- Sweetalert2 11.11.0 JS -->
+  <link rel="stylesheet" href="../public/plugins/sweetalert2/css/sweetalert2.css" >
 
-    <!-- FullCalendar 3.10.5 JS -->
-<link rel="stylesheet" href="../public/plugins/fullcalendar-5.11.5/lib/main.css">
-<script src="../public/plugins/fullcalendar-5.11.5/lib/main.js"></script>
-<script src="../public/plugins/fullcalendar-5.11.5/lib/locales-all.js"></script>
+  <!-- FullCalendar 5.11.5 JS -->
+  <link rel="stylesheet" href="../public/plugins/fullcalendar-5.11.5/lib/main.css">
+  <script src="../public/plugins/fullcalendar-5.11.5/lib/main.js"></script>
+  <script src="../public/plugins/fullcalendar-5.11.5/lib/locales-all.js"></script>
+
 </head>
 
 <body>

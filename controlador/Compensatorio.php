@@ -22,12 +22,32 @@ switch ($_GET["op"]) {
                 $formErrors[] = 'Fecha de inicio invalida';
             }
 
+            // Obteniendo la fecha de hoy en Venezuela
+            $timezone = new DateTimeZone('America/Caracas');
+            $hoy = new DateTime('now', $timezone);
+            $fechaCompensatorio = new DateTime($fecha, $timezone);
+
+            //Dejando las fechas en media noche porque solo nos interesa validar fechas y no las horas
+            $hoy->setTime(0, 0, 0);
+            $fechaCompensatorio->setTime(0, 0, 0);
+
+            // Validar que la fecha de inicio no puede ser anterior a la fecha de hoy
+            if ($fechaCompensatorio < $hoy) {
+                $formErrors[] = 'La fecha del compensatorio debe ser desde la fecha actual en adelante';
+            }
+
+            // Validar que la fecha del compensatorio no abarque fines de semana (Si necesita que los compensatorios abarquen fines de semana comente estas validaciones)
+            //Lunes=1, Martes=2, Miercoles=3, Jueves=4, Viernes=5, Sabado=6, Domingo=7
+            if ($fechaCompensatorio->format('N') >= 6) {
+                $formErrors[] = 'La fecha del compensatorio no puede ser un fin de semana (sábado o domingo)';
+            }
+
             //Si el usuario seleccionado tiene 0 compensatorios pendientes no permitir la insercion
             $rspta = $compensatorioUsuario->obtener_compensatorios_usuario($user_id);
             $result = $rspta->fetch_object();
 
             if($result->totales == 0){
-                $formErrors[] = 'Este usuario ya tiene todos sus compensatorios programados, cancele los actuales o marquelos como terminados para continuar agregando mas compensatorios.';
+                $formErrors[] = 'Este usuario ya tiene todos sus compensatorios programados, cancele los actuales o marquelos como terminados para continuar agregando mas compensatorios';
             }
 
 
