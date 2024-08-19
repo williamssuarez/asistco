@@ -7,6 +7,9 @@ Vista Previa
 ## Base de datos actual
 <img src="ModeloRelacional.png">
 
+Importe el archivo asistco.sql en su base de datos para obtener la nueva base de datos
+IMPORTANTE: Esto creara la estructura desde cero eliminando la estructura anterior y su data, asi que respalde la informacion de la base de datos en produccion, importe la estructura y vuelva a montar la data de los respaldos
+
 ## Modelos
 - Compensatorio.php
 - CompensatorioUsuarios.php
