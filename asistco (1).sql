@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-08-2024 a las 00:31:12
+-- Tiempo de generación: 20-08-2024 a las 00:40:52
 -- Versión del servidor: 10.4.25-MariaDB
 -- Versión de PHP: 8.1.10
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `asistco`
 --
+CREATE DATABASE IF NOT EXISTS `asistco` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `asistco`;
 
 -- --------------------------------------------------------
 
@@ -27,6 +29,7 @@ SET time_zone = "+00:00";
 -- Estructura de tabla para la tabla `asistencia`
 --
 
+DROP TABLE IF EXISTS `asistencia`;
 CREATE TABLE IF NOT EXISTS `asistencia` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `empleado_id` int(11) NOT NULL,
@@ -43,6 +46,7 @@ CREATE TABLE IF NOT EXISTS `asistencia` (
 -- Estructura de tabla para la tabla `compensatorios`
 --
 
+DROP TABLE IF EXISTS `compensatorios`;
 CREATE TABLE IF NOT EXISTS `compensatorios` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
@@ -59,6 +63,7 @@ CREATE TABLE IF NOT EXISTS `compensatorios` (
 -- Estructura de tabla para la tabla `compensatorios_usuarios`
 --
 
+DROP TABLE IF EXISTS `compensatorios_usuarios`;
 CREATE TABLE IF NOT EXISTS `compensatorios_usuarios` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
@@ -73,6 +78,7 @@ CREATE TABLE IF NOT EXISTS `compensatorios_usuarios` (
 -- Estructura de tabla para la tabla `empleados`
 --
 
+DROP TABLE IF EXISTS `empleados`;
 CREATE TABLE IF NOT EXISTS `empleados` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(50) NOT NULL,
@@ -89,6 +95,7 @@ CREATE TABLE IF NOT EXISTS `empleados` (
 -- Estructura de tabla para la tabla `guardia`
 --
 
+DROP TABLE IF EXISTS `guardia`;
 CREATE TABLE IF NOT EXISTS `guardia` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `fecha_inicio` datetime NOT NULL DEFAULT current_timestamp(),
@@ -107,6 +114,7 @@ CREATE TABLE IF NOT EXISTS `guardia` (
 -- Estructura de tabla para la tabla `usuarios`
 --
 
+DROP TABLE IF EXISTS `usuarios`;
 CREATE TABLE IF NOT EXISTS `usuarios` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(50) NOT NULL,
