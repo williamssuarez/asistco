@@ -1,10 +1,10 @@
 <?php
-/*ob_start();
+ob_start();
 session_start();
 if (!isset($_SESSION['nombre'])) {
     header("Location: login.html");
-exit;
-} else {*/
+    exit;
+} else {
     require 'header.php';
 ?>
     <!--CONTENIDO -->
@@ -23,7 +23,7 @@ exit;
                     <div class="box">
 
                         <!--box-header-->
-                        <div class="box-header with-border">
+                        <div class="box-header with-border step1">
                             <h1 class="box-title">Lista de Guardias
                                 <div class="box-tools pull-right">
 
@@ -35,29 +35,29 @@ exit;
 
                         <!--tabla para listar datos-->
                         <!-- Tabla para listar datos -->
-                        <div class="panel-body table-responsive" id="listadoregistros">
+                        <div class="panel-body table-responsive step2" id="listadoregistros">
                             <table id="tbllistado" class="table table-striped table-bordered table-condensed table-hover">
                                 <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Usuario</th>
-                                    <th>Desde</th>
-                                    <th>Hasta</th>
-                                    <th>Observaciones</th>
-                                    <th>Estado</th>
-                                </tr>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Usuario</th>
+                                        <th>Desde</th>
+                                        <th>Hasta</th>
+                                        <th>Observaciones</th>
+                                        <th>Estado</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
                                 </tbody>
                                 <tfoot>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Usuario</th>
-                                    <th>Desde</th>
-                                    <th>Hasta</th>
-                                    <th>Observaciones</th>
-                                    <th>Estado</th>
-                                </tr>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Usuario</th>
+                                        <th>Desde</th>
+                                        <th>Hasta</th>
+                                        <th>Observaciones</th>
+                                        <th>Estado</th>
+                                    </tr>
                                 </tfoot>
                             </table>
                         </div>
@@ -79,7 +79,7 @@ exit;
                     <div class="box">
 
                         <!--box-header-->
-                        <div class="box-header with-border">
+                        <div class="box-header with-border step3">
                             <h1 class="box-title">Programación de Guardias</h1>
                         </div>
                         <!--box-header-->
@@ -117,12 +117,40 @@ exit;
     </div>
     <!--FIN CONTENIDO -->
 
-<?php
-require 'footer.php';
-?>
+    <!-- Incluye jQuery -->
+
+    <!-- Incluye Intro.js -->
+
+    <script src="https://unpkg.com/intro.js/intro.js"></script>
+    <!-- <script>
+        introJs().setOptions({
+            steps: [{
+                    intro: "Bienvenido al modulo de guardias"
+                }, {
+                    element: document.querySelector('.step1'),
+                    intro: "Aquí puedes ver la lista de guardias. Esta tabla muestra todos los guardias registrados.",
+                    position: 'bottom'
+                },
+                {
+                    element: document.querySelector('.step2'),
+                    intro: 'En esta sección, puedes ver todas las guardias programadas',
+                    position: 'top'
+                },
+                {
+                    element: document.querySelector('.step3'),
+                    intro: 'En esta sección, puedes ver y programar todas las guardias',
+                    position: 'top'
+
+                }
+            ]
+        }).start();
+    </script> -->
+    <?php
+    require 'footer.php';
+    ?>
     <script src="./scripts/Guardia.js"></script>
     <!--<script src="./scripts/calendar4Guardia2.js"></script>-->
 <?php
-/*}
-ob_end_flush();*/
+}
+ob_end_flush();
 ?>

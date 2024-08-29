@@ -42,8 +42,17 @@ function listar() {
   tabla = $('#tbllistado').DataTable({
     aProcessing: true,
     aServerSide: true,
-    dom: 'Bfrtip',
-    buttons: ['copyHtml5', 'excelHtml5', 'csvHtml5', 'pdfHtml5'],
+    // dom: 'Bfrtip',
+    // buttons: [
+    //   'copyHtml5',
+    //   'excelHtml5',
+    //   'csvHtml5',
+    //   {
+    //     extend: 'pdfHtml5',
+    //     text: 'Generar PDF',
+          
+    //   }
+    // ],
     ajax: {
       url: '../controlador/Usuario.php?op=listar',
       type: 'GET',
@@ -57,6 +66,7 @@ function listar() {
     order: [[0, 'desc']],
   });
 }
+
 
 function guardaryeditar(e) {
   e.preventDefault();
@@ -129,6 +139,8 @@ function activar(idusuario) {
     }
   });
 }
+
+
 
 // Llamamos a la función init para inicializar el script
 init();

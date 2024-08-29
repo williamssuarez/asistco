@@ -16,83 +16,83 @@ switch ($_GET["op"]) {
     case 'guardaryeditar':
         $formErrors = [];
 
-            //Validar que fechas no esten vacias
-            if (!$fecha_inicio) {
-                $formErrors[] = 'Fecha de inicio invalida';
-            }
-            if (!$fecha_fin) {
-                $formErrors[] = 'Fecha de finalizacion invalida';
-            }
+        //Validar que fechas no esten vacias
+        if (!$fecha_inicio) {
+            $formErrors[] = 'Fecha de inicio invalida';
+        }
+        if (!$fecha_fin) {
+            $formErrors[] = 'Fecha de finalizacion invalida';
+        }
 
-            //Validaciones de fechas
-            $timezone = new DateTimeZone('America/Caracas');
-            $fechaInicio = new DateTime($fecha_inicio, $timezone); //Convirtiendo los string de fechas del form, en objetos de fecha para validarlos como fechas
-            $fechaFin = new DateTime($fecha_fin, $timezone);
+        //Validaciones de fechas
+        $timezone = new DateTimeZone('America/Caracas');
+        $fechaInicio = new DateTime($fecha_inicio, $timezone); //Convirtiendo los string de fechas del form, en objetos de fecha para validarlos como fechas
+        $fechaFin = new DateTime($fecha_fin, $timezone);
 
-            // Obteniendo la fecha de hoy en Venezuela
-            $hoy = new DateTime('now', $timezone);
+        // Obteniendo la fecha de hoy en Venezuela
+        $hoy = new DateTime('now', $timezone);
 
-            //Dejando las fechas en media noche porque solo nos interesa validar fechas y no las horas
-            $hoy->setTime(0, 0, 0);
-            $fechaInicio->setTime(0, 0, 0);
-            $fechaFin->setTime(0, 0, 0);
-
-
-            // Validar que la fecha de inicio no puede ser anterior a la fecha de hoy
-            if ($fechaInicio < $hoy) {
-                $formErrors[] = 'La fecha de inicio debe ser desde la fecha actual en adelante';
-            }
-
-            //Validar que la fecha de finalizacion no sea anterior a la de inicio
-            if ($fechaInicio && $fechaFin && $fechaInicio > $fechaFin) {
-                $formErrors[] = 'La fecha del final de la guardia no puede ser anterior a la fecha de inicio, vuelva a intentarlo';
-            }
-
-            // Validar que las fechas sean exactamente 5 dias
-            $intervalo = $fechaInicio->diff($fechaFin);
-
-            if ($intervalo->days + 1 != 5) {
-                $formErrors[] = 'Las fechas de la guardia deben abarcar exactamente 5 días (una semana laboral completa)';
-            }
-
-            // Validar que ni la fecha de inicio ni la fecha fin abarquen fines de semana (Si necesita que las guardias abarquen fines de semana comente estas validaciones)
-            //Lunes=1, Martes=2, Miercoles=3, Jueves=4, Viernes=5, Sabado=6, Domingo=7
-            if ($fechaInicio->format('N') >= 6) {
-                $formErrors[] = 'La fecha de inicio no puede ser un fin de semana (sábado o domingo)';
-            }
-            if ($fechaFin->format('N') >= 6) {
-                $formErrors[] = 'La fecha de finalización no puede ser un fin de semana (sábado o domingo)';
-            }
-
-            //Si el usuario seleccionado ya tiene 4 guardias pendientes no permitir la insercion
-            $rspta = $guardia->verificarguardias($user_id);
-            $result = $rspta->fetch_object();
-
-            if($result->total == 4){
-                $formErrors[] = 'Este usuario ya tiene 4 guardias programadas, elimine las actuales o marquelas como terminadas para continuar agregando mas guardias';
-            }
+        //Dejando las fechas en media noche porque solo nos interesa validar fechas y no las horas
+        $hoy->setTime(0, 0, 0);
+        $fechaInicio->setTime(0, 0, 0);
+        $fechaFin->setTime(0, 0, 0);
 
 
-            if (!empty($formErrors)){
-                http_response_code(404); // Disparar error en el ajax
+        // Validar que la fecha de inicio no puede ser anterior a la fecha de hoy
+        if ($fechaInicio < $hoy) {
+            $formErrors[] = 'La fecha de inicio debe ser desde la fecha actual en adelante';
+        }
 
-                $jsonResponse = [
-                    'success' => false,
-                    'errors' => $formErrors // mandar array con los errores
-                ];
+        //Validar que la fecha de finalizacion no sea anterior a la de inicio
+        if ($fechaInicio && $fechaFin && $fechaInicio > $fechaFin) {
+            $formErrors[] = 'La fecha del final de la guardia no puede ser anterior a la fecha de inicio, vuelva a intentarlo';
+        }
 
-                echo json_encode($jsonResponse);
-            } else {
+        // Validar que las fechas sean exactamente 5 dias
+        // $intervalo = $fechaInicio->diff($fechaFin);
 
-                $rspta = $guardia->insertar($user_id, $fecha_inicio, $fecha_fin, $observaciones);
+        // if ($intervalo->days + 1 != 5) {
+        //     $formErrors[] = 'Las fechas de la guardia deben abarcar exactamente 5 días (una semana laboral completa)';
+        // }
 
-                $jsonResponse = [
-                    'success' => true,
-                    'semaforo' => 'verde'
-                ];
+        // Validar que ni la fecha de inicio ni la fecha fin abarquen fines de semana (Si necesita que las guardias abarquen fines de semana comente estas validaciones)
+        //Lunes=1, Martes=2, Miercoles=3, Jueves=4, Viernes=5, Sabado=6, Domingo=7
+        // if ($fechaInicio->format('N') >= 6) {
+        //     $formErrors[] = 'La fecha de inicio no puede ser un fin de semana (sábado o domingo)';
+        // }
+        // if ($fechaFin->format('N') >= 6) {
+        //     $formErrors[] = 'La fecha de finalización no puede ser un fin de semana (sábado o domingo)';
+        // }
 
-                echo json_encode($jsonResponse);
-            }
+        //Si el usuario seleccionado ya tiene 4 guardias pendientes no permitir la insercion
+        $rspta = $guardia->verificarguardias($user_id);
+        $result = $rspta->fetch_object();
+
+        if ($result->total == 4) {
+            $formErrors[] = 'Este usuario ya tiene 4 guardias programadas, elimine las actuales o marquelas como terminadas para continuar agregando mas guardias';
+        }
+
+
+        if (!empty($formErrors)) {
+            http_response_code(404); // Disparar error en el ajax
+
+            $jsonResponse = [
+                'success' => false,
+                'errors' => $formErrors // mandar array con los errores
+            ];
+
+            echo json_encode($jsonResponse);
+        } else {
+
+            $rspta = $guardia->insertar($user_id, $fecha_inicio, $fecha_fin, $observaciones);
+
+            $jsonResponse = [
+                'success' => true,
+                'semaforo' => 'verde'
+            ];
+
+            echo json_encode($jsonResponse);
+        }
         break;
     case 'getguardiaform':
 
@@ -114,7 +114,7 @@ switch ($_GET["op"]) {
             $textColor = '';
 
             if ($status == 0) {
-                $backgroundColor = '#FFC107';//Pendiente = amarillo
+                $backgroundColor = '#FFC107'; //Pendiente = amarillo
                 $textColor = '#1F2D3D';
             } elseif ($status == 1) {
                 $backgroundColor = '#008000'; //Terminada = exito
@@ -165,11 +165,11 @@ switch ($_GET["op"]) {
             "aaData" => $data
         );
         echo json_encode($results);
-    break;
+        break;
     case 'cancelar':
         $rspta = $guardia->cancelar($id);
         echo $rspta ? "Datos eliminados correctamente" : "No se pudieron eliminar los datos";
-    break;
+        break;
     case 'terminar':
         $rspta = $guardia->terminar($id);
 
@@ -185,6 +185,5 @@ switch ($_GET["op"]) {
         $consulta3 = $compensatorioUsuario->editarcompensatorios($user_id, $compensatorios_actuales);
 
         echo $rspta ? "Guardia terminada correctamente" : "No se pudieron actualizar los datos";
-    break;
+        break;
 }
-?>

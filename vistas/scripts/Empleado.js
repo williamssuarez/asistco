@@ -27,14 +27,15 @@ function limpiar() {
 }
 
 function mostrarform(flag) {
+  limpiar();
   if (flag) {
     $('#listadoregistros').hide();
-    $('#formularioregistros').show();
+    $('#formularioregistro').show();
     $('#btnGuardar').prop('disabled', false);
     $('#btnAgregar').hide();
   } else {
     $('#listadoregistros').show();
-    $('#formularioregistros').hide();
+    $('#formularioregistro').hide();
     $('#btnAgregar').show();
   }
 }
@@ -48,8 +49,6 @@ function listar() {
   tabla = $('#tbllistado').DataTable({
     processing: true, // Activamos el procesamiento del DataTables
     serverSide: true, // Paginación y filtrado realizados por el servidor
-    dom: 'Bfrtip', // Definimos los elementos del control de tabla
-    buttons: ['copyHtml5', 'excelHtml5', 'csvHtml5', 'pdf'],
     ajax: {
       url: '../controlador/Empleado.php?op=listar',
       type: 'GET',

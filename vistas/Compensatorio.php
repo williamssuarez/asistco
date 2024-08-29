@@ -1,10 +1,10 @@
 <?php
-/*ob_start();
+ob_start();
 session_start();
 if (!isset($_SESSION['nombre'])) {
     header("Location: login.html");
-exit;
-} else {*/
+    exit;
+} else {
     require 'header.php';
 ?>
     <!--CONTENIDO -->
@@ -39,22 +39,22 @@ exit;
                         <div class="panel-body table-responsive" id="listadoregistros2">
                             <table id="tbllistado2" class="table table-striped table-bordered table-condensed table-hover">
                                 <thead>
-                                <tr>
-                                    <th>Estado</th>
-                                    <th>Usuario</th>
-                                    <th>Días disponibles</th>
-                                    <th>Estado</th>
-                                </tr>
+                                    <tr>
+                                        <th>Estado</th>
+                                        <th>Usuario</th>
+                                        <th>Días disponibles</th>
+                                        <th>Estado</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
                                 </tbody>
                                 <tfoot>
-                                <tr>
-                                    <th>Estado</th>
-                                    <th>Usuario</th>
-                                    <th>Días disponibles</th>
-                                    <th>Estado</th>
-                                </tr>
+                                    <tr>
+                                        <th>Estado</th>
+                                        <th>Usuario</th>
+                                        <th>Días disponibles</th>
+                                        <th>Estado</th>
+                                    </tr>
                                 </tfoot>
                             </table>
                         </div>
@@ -91,24 +91,24 @@ exit;
                         <div class="panel-body table-responsive" id="listadoregistros">
                             <table id="tbllistado" class="table table-striped table-bordered table-condensed table-hover">
                                 <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Usuario</th>
-                                    <th>Día</th>
-                                    <th>Observaciones</th>
-                                    <th>Estado</th>
-                                </tr>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Usuario</th>
+                                        <th>Día</th>
+                                        <th>Observaciones</th>
+                                        <th>Estado</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
                                 </tbody>
                                 <tfoot>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Usuario</th>
-                                    <th>Día</th>
-                                    <th>Observaciones</th>
-                                    <th>Estado</th>
-                                </tr>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Usuario</th>
+                                        <th>Día</th>
+                                        <th>Observaciones</th>
+                                        <th>Estado</th>
+                                    </tr>
                                 </tfoot>
                             </table>
                         </div>
@@ -169,12 +169,12 @@ exit;
     </div>
     <!--FIN CONTENIDO -->
 
-<?php
-require 'footer.php';
-?>
+    <?php
+    require 'footer.php';
+    ?>
     <script src="./scripts/Compensatorio.js"></script>
     <!--<script src="./scripts/calendar4Guardia2.js"></script>-->
 <?php
-/*}
-ob_end_flush();*/
+}
+ob_end_flush();
 ?>

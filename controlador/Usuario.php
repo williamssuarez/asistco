@@ -47,7 +47,7 @@ switch ($_GET["op"]) {
 
             //insertar en los compensatorios
             $compensatorioUsuario->insertar($string->id);
-            
+
             echo $rspta ? "Datos registrados correctamente" : "No se pudo registrar todos los datos del usuario";
         } else {
             $rspta = $usuario->editar($id, $nombre, $apellido, $login, $email, $clavehash, $imagen);
@@ -101,6 +101,14 @@ switch ($_GET["op"]) {
         break;
 
     case 'verificar':
+
+        // $logina = $_POST['logina'];
+        // $clavea = $_POST['clavea'];
+
+        // $clavehash = hash("SHA256", $clavea);
+        // $rspta = $usuario->verificar($logina, $clavehash);
+        // $fetch = $rspta->fetch_object();
+
         if (isset($_POST['logina']) && isset($_POST['clavea'])) {
             $logina = limpiarCadena($_POST['logina']);
             $clavea = limpiarCadena($_POST['clavea']);
@@ -109,8 +117,8 @@ switch ($_GET["op"]) {
             $rspta = $usuario->verificar($logina, $clavehash);
             $fetch = $rspta->fetch_object();
 
-            if ($fetch) {
-                $_SESSION['idusuario'] = $fetch->id;
+            if (isset($fetch)) {
+                $_SESSION['idusuario'] = $fetch->idusuario;
                 $_SESSION['nombre'] = $fetch->nombre;
                 $_SESSION['imagen'] = $fetch->imagen;
                 $_SESSION['login'] = $fetch->login;
@@ -125,7 +133,8 @@ switch ($_GET["op"]) {
     case 'salir':
         session_unset();
         session_destroy();
-        header("Location: ../index.php");
+        header("Location: ../vistas/login.html");
+        exit(); // Asegúrate de salir después de redirigir
         break;
     case 'select_usuario':
         $rspta = $usuario->listar();

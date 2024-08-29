@@ -9,17 +9,14 @@ $('#frmAcceso').on('submit', function (e) {
   } else {
     $.post(
       '../controlador/Usuario.php?op=verificar',
-      { logina: logina, clavea: clavea },
+      { "logina": logina, "clavea": clavea },
       function (data) {
-        if (data && data.idusuario) {
-          $(location).attr('href', 'escritorio.php');
+        console.log(data);
+        if (data != "null") {
+          $(location).attr('href', 'Escritorio.php');
         } else {
           bootbox.alert('Usuario y/o contraseña incorrectos');
         }
-      },
-      'json'
-    ).fail(function () {
-      bootbox.alert('Error en la solicitud. Intenta de nuevo.');
     });
   }
 });
